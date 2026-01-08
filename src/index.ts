@@ -32,6 +32,7 @@ import {
   interpretChannelDeployResult,
 } from "./deploy";
 import { getChannelId } from "./getChannelId";
+import { getFirebaseTools } from "./installFirebaseTools";
 import {
   getURLsMarkdownFromChannelDeployResult,
   postChannelSuccessComment,
@@ -80,6 +81,10 @@ async function run() {
         "firebase.json file not found. If your firebase.json file is not in the root of your repo, edit the entryPoint option of this GitHub action."
       );
     }
+    endGroup();
+
+    startGroup("Installing Firebase CLI");
+    await getFirebaseTools(firebaseToolsVersion);
     endGroup();
 
     startGroup("Setting up CLI credentials");

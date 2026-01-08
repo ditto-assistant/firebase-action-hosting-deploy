@@ -82,12 +82,12 @@ async function execWithCredentials(
 ) {
   let deployOutputBuf: Buffer[] = [];
   const debug = opts.debug || false;
-  const firebaseToolsVersion = opts.firebaseToolsVersion || "latest";
   const force = opts.force;
 
   try {
+    // Use the globally installed firebase command (installed and cached by installFirebaseTools)
     await exec(
-      `npx firebase-tools@${firebaseToolsVersion}`,
+      "firebase",
       [
         ...args,
         ...(projectId ? ["--project", projectId] : []),
@@ -119,7 +119,6 @@ async function execWithCredentials(
       );
       await execWithCredentials(args, projectId, gacFilename, {
         debug: true,
-        firebaseToolsVersion,
         force,
       });
     } else {
